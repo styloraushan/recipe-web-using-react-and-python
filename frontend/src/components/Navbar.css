@@ -1,0 +1,104 @@
+/* Navbar Container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px; /* Reduced padding for smaller height */
+    background: #50ff59;
+    color: white;
+    height: 50px; /* Adjusted height */
+    position: fixed; /* Fixes navbar at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures it stays on top of other content */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+}
+
+
+/* Right Side (Menu + Icons) */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Increased gap for better spacing */
+    margin-right: 25px; /* Extra space from right */
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: rgb(8, 8, 8);
+    font-weight: bold;
+   
+}
+
+.nav-links li a:hover {
+    text-decoration: underline;
+}
+
+/* Icons */
+.icons {
+    display: flex;
+    gap: 15px;
+    
+}
+
+.icon {
+    font-size: 20px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 50%; /* Makes the icon round */
+    padding: 10px;
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    background-color: #f0f0f0; /* Light background color */
+    color: #333; /* Dark text color */
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.icon:hover {
+    background-color: #007bff; /* Change background on hover */
+    color: white; /* Change text color on hover */
+    border-color: #007bff; /* Change border color on hover */
+    transform: scale(1.1); /* Slight zoom effect on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+}
+
+
+/* Sidebar (Mobile) */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100vh;
+    background: #ff7f50;
+    padding: 20px;
+    transition: right 0.3s ease-in-out;
+}
+
+.sidebar.active {
+    right: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}

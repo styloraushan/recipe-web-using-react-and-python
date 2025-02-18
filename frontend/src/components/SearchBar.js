@@ -1,0 +1,160 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./SearchBar.css";
+import Navbar from "./Navbar";
+import { FaSearch } from "react-icons/fa";
+import Ingredients from "./Ingredients";
+import northIndianFood from "../data/northfood";
+import easternIndianFood from "../data/eastfood";
+import westernIndianFood from "../data/westfood";
+import centralIndianFood from "../data/centralfood";
+import southIndianFood from "../data/southfood";
+
+const SearchBar = () => {
+  const [query, setQuery] = useState("");
+  const [searchType, setSearchType] = useState("title");
+  const [filteredFood, setFilteredFood] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const navigate = useNavigate();
+
+  const categories = {
+    "North Indian": northIndianFood,
+    "East Indian": easternIndianFood,
+    "West Indian": westernIndianFood,
+    "Central Indian": centralIndianFood,
+    "South Indian": southIndianFood,
+  };
+
+  const allFoodData = [
+    ...northIndianFood,
+    ...easternIndianFood,
+    ...westernIndianFood,
+    ...centralIndianFood,
+    ...southIndianFood,
+  ];
+
+  // Function to handle search across all categories
+  const handleSearch = () => {
+    if (query.trim() !== "") {
+      const queryLower = query.toLowerCase();
+      let result = [];
+
+      if (searchType === "title") {
+        result = allFoodData.filter((food) =>
+          food.name.toLowerCase().includes(queryLower)
+        );
+      } else if (searchType === "ingredients") {
+        result = allFoodData.filter((food) =>
+          food.ingredients.some((ingredient) =>
+            ingredient.toLowerCase().includes(queryLower)
+          )
+        );
+      }
+
+      setFilteredFood(result);
+      setSelectedCategory(null); // Reset category selection on search
+    }
+  };
+
+  // Function to handle category selection
+  const handleCategoryClick = (category) => {
+    setFilteredFood(categories[category] || []);
+    setSelectedCategory(category);
+  };
+
+  // Dynamically set the placeholder text
+  const getPlaceholderText = () => {
+    return searchType === "title"
+      ? "Search by dish name..."
+      : "Search by ingredients...";
+  };
+
+  return (
+    <div>
+      <Navbar />
+      <div className="search-container">
+        <div className="search-input-wrapper">
+          <input
+            type="text"
+            placeholder={getPlaceholderText()}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()} // Trigger search on Enter key
+          />
+          <FaSearch className="icon search-icon" onClick={handleSearch} />
+        </div>
+
+        <div className="search-buttons">
+          <button
+            className={searchType === "title" ? "active" : ""}
+            onClick={() => setSearchType("title")}
+          >
+            By Title
+          </button>
+          <button
+            className={searchType === "ingredients" ? "active" : ""}
+            onClick={() => setSearchType("ingredients")}
+          >
+           Browse Ingredients
+          </button>
+          <button onClick={() => navigate("/ingredients")}> By Ingredients</button>
+        </div>
+
+        {/* Category Selection */}
+        <div className="category-buttons">
+          {Object.keys(categories).map((category) => (
+            <button
+              key={category}
+              className={selectedCategory === category ? "active" : ""}
+              onClick={() => handleCategoryClick(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Display food results after search or category selection */}
+      <div className="food-list" style={{ display: "flex", flexWrap: "wrap" }}>
+        {filteredFood.length > 0 ? (
+          filteredFood.map((food, index) => (
+            <div
+              key={index}
+              className="food-item"
+              style={{
+                width: "200px",
+                margin: "10px",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                textAlign: "center",
+              }}
+            >
+              <img
+                src={food.image}
+                alt={food.name}
+                style={{
+                  width: "100%",
+                  height: "150px",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                }}
+              />
+              <h3>{food.name}</h3>
+              <p>{food.description}</p>
+            </div>
+          ))
+        ) : (
+          <p></p>
+        )}
+      </div>
+
+      {/* Display the Ingredients component */}
+      <div>
+        <Ingredients />
+      </div>
+    </div>
+  );
+};
+
+export default SearchBar;
