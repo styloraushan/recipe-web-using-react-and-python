@@ -1,22 +1,22 @@
 const centralIndianFood = [
     {
       name: "Poha",
-      image: "path_to_image_or_image_url",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ0V5t3Br2q6fGNZcFALSw-a-3xLAzW3jbeA&s",
       description: "A savory breakfast dish made with flattened rice, turmeric, mustard seeds, peas, and peanuts, popular in Madhya Pradesh and Maharashtra."
     },
     {
       name: "Bhutte Ka Kees",
-      image: "path_to_image_or_image_url",
+      image: "https://images.hindi.news18.com/ibnkhabar/uploads/2021/11/Bhutte-ka-Kees-16376681284x3.jpg",
       description: "A unique dish from Madhya Pradesh made with grated corn cooked with spices and milk."
     },
     {
       name: "Dal Bafla",
-      image: "path_to_image_or_image_url",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1VZrt8Ot0CbGSXklq1ahPtM6VB6eNrtTkRQ&s",
       description: "A traditional dish from Madhya Pradesh consisting of wheat flour dough balls (bafla) served with lentil curry (dal)."
     },
     {
       name: "Chana Samosa",
-      image: "path_to_image_or_image_url",
+      image: "https://cdn.cdnparenting.com/articles/2018/11/04145546/samosa-with-masala-chana-recipe_1133927633.webp",
       description: "A variation of samosas filled with spiced chickpeas, popular in central India."
     },
     {

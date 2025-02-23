@@ -11,7 +11,7 @@ const recipes = [
     name: "Spaghetti Carbonara",
     description:
       "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.",
-    image: "https://www.simplyrecipes.com/thmb/Oa9V2lmhWom41ELfF3eYVdXjVAo=/2000x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Spaghetti-Carbonara-LEAD-06-d0a52b17377f4f5f86c3046a6b2145b0.jpg",
+    image: "https://www.allrecipes.com/thmb/Vg2cRidr2zcYhWGvPD8M18xM_WY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11973-spaghetti-carbonara-ii-DDMFS-4x3-6edea51e421e4457ac0c3269f3be5157.jpg",
   },
   {
     id: 2,
@@ -25,21 +25,39 @@ const recipes = [
     name: "Vegetable Stir-Fry",
     description:
       "A quick and healthy dish packed with colorful veggies and soy sauce.",
-    image: "https://www.recipetineats.com/wp-content/uploads/2020/08/Vegetable-Stir-Fry_5-SQ.jpg",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_ZRkUfrveFnAgNkXzDdxYx0AYDOn_Gw4Jwg&s",
   },
   {
     id: 4,
     name: "Chocolate Lava Cake",
     description:
       "A rich chocolate dessert with a gooey, molten center served warm.",
-    image: "https://www.cookingclassy.com/wp-content/uploads/2020/02/molten-lava-cake-20.jpg",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu6mEn2S-XQ9jxSWuQutBdKpEjNrXx-GhvUw&s",
   },
   {
     id: 5,
     name: "Greek Salad",
     description:
       "A refreshing salad with feta cheese, olives, tomatoes, and cucumbers.",
-    image: "https://www.acouplecooks.com/wp-content/uploads/2022/04/Greek-Salad-006.jpg",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLCj3FBQYgKwjQp9bjsACmzEIGzi2ka5GU_g&s",
+  },
+  {
+    id: 6,
+    name: "Butter Chicken",
+    image: "https://bing.com/th?id=OSK.97ee55c141c2f83bc22172593933b785",
+    description: "A creamy, flavorful dish made with marinated chicken cooked in a rich tomato gravy with butter and cream."
+  },
+  {
+    id: 7,
+    name: "Paneer Tikka",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfPSukRfeHtN7tj8-ayndPIH9C0Bt1VVrbbA&s",
+    description: "Grilled chunks of paneer marinated in yogurt and spices, often served with green chutney."
+  },
+  {
+    id: 8,
+    name: "Rogan Josh",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRALenBlSNumBnitd9xNeUCNp9xuBdU_GwtIw&s",
+    description: "A traditional Kashmiri dish of lamb cooked in aromatic, rich spices, including saffron and cardamom."
   },
 ];
 const Recipes = () => {

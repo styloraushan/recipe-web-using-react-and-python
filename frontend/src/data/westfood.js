@@ -1,22 +1,22 @@
 const westernIndianFood = [
     {
       name: "Dhokla",
-      image: "path_to_image_or_image_url",
+      image: "https://upload.wikimedia.org/wikipedia/commons/6/65/Dhokla_on_Gujrart.jpg",
       description: "A savory steamed cake made from rice and chickpea flour, popular in Gujarat."
     },
     {
       name: "Pav Bhaji",
-      image: "path_to_image_or_image_url",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTooAaRCM4I7u-O6mkD8oMUsXMEDcIwl8EDjQ&s",
       description: "A Mumbai street food consisting of a spicy vegetable mash (bhaji) served with buttered pav (bread)."
     },
     {
       name: "Goan Fish Curry",
-      image: "path_to_image_or_image_url",
+      image: "https://www.recipetineats.com/tachyon/2020/10/Goan-Fish-Curry_6-SQ.jpg",
       description: "A tangy and spicy fish curry from Goa, made with coconut milk, tamarind, and Goan spices."
     },
     {
       name: "Vada Pav",
-      image: "path_to_image_or_image_url",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9peDRZ97EaGP3ZXBgmfSUHFf0Cxj-od2sVg&s",
       description: "A spicy potato fritter served in a bun, often referred to as the 'Indian burger', popular in Maharashtra."
     },
     {

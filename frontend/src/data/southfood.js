@@ -1,22 +1,22 @@
 const southIndianFood = [
     {
       name: "Dosa",
-      image: "path_to_image_or_image_url",
+      image: "https://palatesdesire.com/wp-content/uploads/2022/09/Mysore-masala-dosa-recipe@palates-desire.jpg",
       description: "A crispy, thin, savory crepe made from fermented rice and urad dal batter, typically served with chutney and sambar."
     },
     {
       name: "Idli",
-      image: "path_to_image_or_image_url",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGGe0wTkPjv2qutNNgsoovXu0wwrbdPa7J2A&s",
       description: "Soft, steamed rice cakes made from fermented rice and lentil batter, usually served with chutneys and sambar."
     },
     {
       name: "Vada",
-      image: "path_to_image_or_image_url",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWjOjqEMHOnx619ESAaUnuvUsGwIlW4og9oA&s",
       description: "A deep-fried lentil donut, crispy on the outside and soft inside, typically served with coconut chutney and sambar."
     },
     {
       name: "Sambar",
-      image: "path_to_image_or_image_url",
+      image: "https://www.cubesnjuliennes.com/wp-content/uploads/2021/01/South-Indian-Sambar-Recipe.jpg",
       description: "A spicy, tangy lentil-based vegetable stew flavored with tamarind, often served with rice or dosas."
     },
     {

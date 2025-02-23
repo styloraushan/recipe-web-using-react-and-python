@@ -21,7 +21,7 @@ const Navbar = () => {
     <nav className="navbar">
       {/* Left: App Icon */}
       <div className="navbar-left">
-        <h2 className="logo">🍽️ Recipe Finder</h2>
+        <h2 className="logo">🍽️ Recipe Navigator </h2>
       </div>
 
       {/* Right: Menu Links + Icons */}

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SearchBar.css";
+import "./Home.css";
 import Navbar from "./Navbar";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaHeart, FaStar } from "react-icons/fa";
 import Ingredients from "./Ingredients";
 import northIndianFood from "../data/northfood";
 import easternIndianFood from "../data/eastfood";
@@ -95,9 +96,9 @@ const SearchBar = () => {
             className={searchType === "ingredients" ? "active" : ""}
             onClick={() => setSearchType("ingredients")}
           >
-           Browse Ingredients
+            Browse Ingredients
           </button>
-          <button onClick={() => navigate("/ingredients")}> By Ingredients</button>
+          <button onClick={() => navigate("/ingredients")}>By Ingredients</button>
         </div>
 
         {/* Category Selection */}
@@ -115,37 +116,35 @@ const SearchBar = () => {
       </div>
 
       {/* Display food results after search or category selection */}
-      <div className="food-list" style={{ display: "flex", flexWrap: "wrap" }}>
+      <div className="food-list">
         {filteredFood.length > 0 ? (
           filteredFood.map((food, index) => (
-            <div
-              key={index}
-              className="food-item"
-              style={{
-                width: "200px",
-                margin: "10px",
-                padding: "10px",
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                textAlign: "center",
-              }}
-            >
-              <img
-                src={food.image}
-                alt={food.name}
-                style={{
-                  width: "100%",
-                  height: "150px",
-                  objectFit: "cover",
-                  borderRadius: "8px",
-                }}
-              />
-              <h3>{food.name}</h3>
-              <p>{food.description}</p>
+            <div key={index} className="food-item">
+              {/* Favorite Heart Icon */}
+              <div className="favorite-icon">
+                <FaHeart />
+              </div>
+
+              {/* Food Image */}
+              <img src={food.image} alt={food.name} />
+
+              <div className="food-info">
+                <h3>{food.name}</h3>
+
+                {/* Star Rating */}
+                <div className="star-rating">
+                  {[...Array(5)].map((_, i) => (
+                    <FaStar key={i} className="star-icon" />
+                  ))}
+                </div>
+
+                {/* Food Description */}
+                <p>{food.description}</p>
+              </div>
             </div>
           ))
         ) : (
-          <p></p>
+          <p>No food items found</p>
         )}
       </div>
 

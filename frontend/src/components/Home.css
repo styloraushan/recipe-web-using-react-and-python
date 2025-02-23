@@ -36,6 +36,7 @@
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
 }
 
 /* Food Image */
@@ -64,4 +65,20 @@
     font-size: 1rem;
     color: #777;
     line-height: 1.5;
+}
+
+/* Favorite Icon */
+.favorite-icon {
+    position: absolute;
+    margin-bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgb(249, 102, 127);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
 }

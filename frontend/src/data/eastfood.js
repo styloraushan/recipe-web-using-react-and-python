@@ -1,22 +1,22 @@
 const easternIndianFood = [
     {
       name: "Macher Jhol",
-      image: "path_to_image_or_image_url",
+      image: "https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Karthika_Gopalakrishnan/Aar_macher_Jhol.jpg",
       description: "A traditional Bengali fish curry made with fresh fish, potatoes, and a variety of spices in a mustard oil-based gravy."
     },
     {
       name: "Litti Chokha",
-      image: "path_to_image_or_image_url",
+      image: "https://img-global.cpcdn.com/recipes/38bb1f4b32eabc41/1360x1928cq70/litti-chokha-recipe-main-photo.webp",
       description: "A Bihari dish consisting of wheat flour dough balls stuffed with roasted gram flour, served with mashed vegetables like brinjal and tomato."
     },
     {
       name: "Chingri Malai Curry",
-      image: "path_to_image_or_image_url",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr8a-VmQcshwLy8sRZXw8vhl_rPvol9RmsPw&s",
       description: "A rich and creamy prawn curry from Bengal, cooked in coconut milk with a blend of spices."
     },
     {
       name: "Momos",
-      image: "path_to_image_or_image_url",
+      image: "https://www.awesomecuisine.com/wp-content/uploads/2009/05/Chicken-Momos-500x500.jpg",
       description: "Steamed or fried dumplings filled with vegetables or meat, popular in the Northeastern states of India."
     },
     {
