@@ -4,12 +4,14 @@ import axios from "axios";
 import "./ViewProfile.css";
 import Navbar from "./Navbar";
 import { Link } from 'react-router-dom';
-
+import { useParams } from "react-router-dom";
 import UpdateUser from "../Pages/UpdateUser";
 import AddRecipe from "../Pages/AddRecipe";
 
 
 const ViewProfile = () => {
+  const { user_id } = useParams();
+ 
   const [userData, setUserData] = useState(null);
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [activeSection, setActiveSection] = useState("recipes");
@@ -55,7 +57,11 @@ const ViewProfile = () => {
 
   const handleAddRecipe = () => setActiveSection("addRecipe");
   const handleSavedRecipes = () => setActiveSection("recipes");
-  const handleUpdateAccount = () => setActiveSection("updateAccount");
+  const handleUpdateAccount = () => {
+    const userId = localStorage.getItem("user_id"); // Get user ID
+    setActiveSection("updateAccount"); // Show UpdateUser inside ViewProfile
+    navigate(`/update/${userId}`); // Navigate to update page
+  };
 
   const handleDeactivateAccount = () => {
     if (window.confirm("Are you sure you want to deactivate your account?")) {
@@ -100,46 +106,44 @@ const ViewProfile = () => {
         </div>
 
         <div className="recipes-sections">
-  {activeSection === "recipes" && (
-    <div className="recipes-sectionss">
-      <h3>Added Recipes</h3>
-      <div className="recipes-grids" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '20px' }}>
-        {savedRecipes.map((recipe, index) => (
-          <Link 
-            to="/recipeinfo" 
-            key={index} 
-            style={{ textDecoration: 'none', color: 'inherit' }}
-          >
-            <div className="recipe-cards">
-              <img
-                src={recipe.image}
-                alt={recipe.name}
-                className="recipe-images"
-                style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '8px' }}
-              />
-              <h4>{recipe.name}</h4>
-              <p>{recipe.description}</p>
+          {activeSection === "recipes" && (
+            <div className="recipes-sectionss">
+              <h3>Added Recipes</h3>
+              <div className="recipes-grids" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '20px' }}>
+                {savedRecipes.map((recipe, index) => (
+                  <Link
+                    to="/recipeinfo"
+                    key={index}
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
+                    <div className="recipe-cards">
+                      <img
+                        src={recipe.image}
+                        alt={recipe.name}
+                        className="recipe-images"
+                        style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '8px' }}
+                      />
+                      <h4>{recipe.name}</h4>
+                      <p>{recipe.description}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </Link>
-        ))}
-      </div>
-    </div>
 
           )}
 
-{activeSection === "addRecipe" && (
-  <div className="add-recipe-section">
-    <div>
-      <AddRecipe />  {/* ✅ Proper component syntax */}
-    </div>
-  </div>
-)}
-
-          {activeSection === "updateAccount" && (
-          <div>
-          <UpdateUser />  {/* ✅ Proper component syntax */}
-        </div>
+          {activeSection === "addRecipe" && (
+            <div className="add-recipe-section">
+              <div>
+                <AddRecipe />  {/* ✅ Proper component syntax */}
+              </div>
+            </div>
           )}
+
+<div>
+      {activeSection === "updateAccount" && <UpdateUser />}
+    </div>
         </div>
 
       </div>
