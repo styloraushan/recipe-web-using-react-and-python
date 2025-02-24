@@ -1,4 +1,77 @@
 const northIndianFood = [
+  {
+    name: "Butter Chicken",
+    image: "https://bing.com/th?id=OSK.97ee55c141c2f83bc22172593933b785",
+    description:
+      "A creamy, flavorful dish made with marinated chicken cooked in a rich tomato gravy with butter and cream.",
+    cookingDetails: {
+      servings: 4,
+      prep: "15 min",
+      cook: "30 min",
+      ready: "45 min",
+    },
+    ingredients: [
+      { ingredient: "Chicken", metric: "500g", us: "1.1 lb" },
+      { ingredient: "Butter", metric: "100g", us: "3.5 oz" },
+      { ingredient: "Tomato Puree", metric: "200ml", us: "0.85 cup" },
+      // Add more ingredients as needed
+    ],
+    directions: [
+      "Marinate chicken with spices and yogurt for at least 1 hour.",
+      "Heat butter in a pan and cook the chicken until lightly browned.",
+      "Add tomato puree and simmer until the chicken is cooked through.",
+      "Garnish with fresh cream and serve hot.",
+    ],
+  },
+  {
+    name: "Paneer Tikka",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfPSukRfeHtN7tj8-ayndPIH9C0Bt1VVrbbA&s",
+    description:
+      "Grilled chunks of paneer marinated in yogurt and spices, often served with green chutney.",
+    cookingDetails: {
+      servings: 4,
+      prep: "20 min",
+      cook: "15 min",
+      ready: "35 min",
+    },
+    ingredients: [
+      { ingredient: "Paneer", metric: "250g", us: "0.55 lb" },
+      { ingredient: "Yogurt", metric: "100g", us: "3.5 oz" },
+      { ingredient: "Spice Mix", metric: "2 tbsp", us: "2 tbsp" },
+      // Add more ingredients as needed
+    ],
+    directions: [
+      "Cut paneer into cubes and marinate with yogurt and spices for 30 minutes.",
+      "Skewer the paneer and grill on medium heat for 10-15 minutes.",
+      "Serve with green chutney and lemon wedges.",
+    ],
+  },
+  {
+    name: "Rogan Josh",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRALenBlSNumBnitd9xNeUCNp9xuBdU_GwtIw&s",
+    description:
+      "A traditional Kashmiri dish of lamb cooked in aromatic, rich spices, including saffron and cardamom.",
+    cookingDetails: {
+      servings: 4,
+      prep: "20 min",
+      cook: "1 hr",
+      ready: "1 hr 20 min",
+    },
+    ingredients: [
+      { ingredient: "Lamb", metric: "600g", us: "1.32 lb" },
+      { ingredient: "Onions", metric: "2 medium", us: "2 medium" },
+      { ingredient: "Yogurt", metric: "150g", us: "5.3 oz" },
+      // Additional ingredients as required
+    ],
+    directions: [
+      "Brown the lamb pieces in oil.",
+      "Add sliced onions and cook until golden.",
+      "Mix in yogurt and spices, then simmer until tender.",
+    ],
+  },
+
     {
       name: "Butter Chicken",
       image: "https://bing.com/th?id=OSK.97ee55c141c2f83bc22172593933b785",
@@ -99,7 +172,8 @@ const northIndianFood = [
       image: "path_to_image_or_image_url",
       description: "A rich and creamy butter chicken dish, made with grilled chicken pieces in a tomato-based gravy."
     }
-  ];
-  
-  export default northIndianFood;
-  
+
+  // Continue for each recipe as needed...
+];
+
+export default northIndianFood;

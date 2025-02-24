@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Added Link import
 import "./SearchBar.css";
 import "./Home.css";
 import Navbar from "./Navbar";
@@ -45,6 +45,8 @@ const SearchBar = () => {
           food.name.toLowerCase().includes(queryLower)
         );
       } else if (searchType === "ingredients") {
+        // Note: This assumes that food.ingredients is an array of strings.
+        // If food.ingredients is an array of objects, adjust accordingly.
         result = allFoodData.filter((food) =>
           food.ingredients.some((ingredient) =>
             ingredient.toLowerCase().includes(queryLower)
@@ -120,27 +122,33 @@ const SearchBar = () => {
         {filteredFood.length > 0 ? (
           filteredFood.map((food, index) => (
             <div key={index} className="food-item">
-              {/* Favorite Heart Icon */}
-              <div className="favorite-icon">
-                <FaHeart />
-              </div>
-
-              {/* Food Image */}
-              <img src={food.image} alt={food.name} />
-
-              <div className="food-info">
-                <h3>{food.name}</h3>
-
-                {/* Star Rating */}
-                <div className="star-rating">
-                  {[...Array(5)].map((_, i) => (
-                    <FaStar key={i} className="star-icon" />
-                  ))}
+              <Link
+                to="/recipeinfo"
+                state={{ food }} // Pass the food details via state
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                {/* Favorite Heart Icon */}
+                <div className="favorite-icon">
+                  <FaHeart />
                 </div>
 
-                {/* Food Description */}
-                <p>{food.description}</p>
-              </div>
+                {/* Food Image */}
+                <img src={food.image} alt={food.name} />
+
+                <div className="food-info">
+                  <h3>{food.name}</h3>
+
+                  {/* Star Rating */}
+                  <div className="star-rating">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} className="star-icon" />
+                    ))}
+                  </div>
+
+                  {/* Food Description */}
+                  <p>{food.description}</p>
+                </div>
+              </Link>
             </div>
           ))
         ) : (

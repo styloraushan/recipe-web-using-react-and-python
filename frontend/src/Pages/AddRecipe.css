@@ -1,0 +1,128 @@
+/* AddRecipe.css */
+
+.add-recipe-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px 40px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    font-family: "Poppins", sans-serif;
+    transition: 0.3s ease-in-out;
+}
+
+.add-recipe-container:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.add-recipe-container h2 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.add-recipe-container h4 {
+    margin-top: 20px;
+    color: #34495e;
+    font-size: 18px;
+}
+
+.cooking-details-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.cooking-details-row input {
+    flex: 1;
+    min-width: 150px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form input[type="text"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s ease-in-out;
+}
+
+form input[type="text"]:focus,
+form textarea:focus,
+form select:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+    outline: none;
+}
+
+form textarea {
+    resize: vertical;
+    height: 90px;
+}
+
+.ingredient-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.ingredient-row input {
+    flex: 1;
+}
+
+.add-btn,
+.submit-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #4caf50;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s ease-in-out;
+    margin-top: 15px;
+}
+
+.add-btn {
+    background-color: #2196f3;
+}
+
+.add-btn:hover,
+.submit-btn:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
+}
+
+form select {
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .ingredient-row {
+        flex-direction: column;
+    }
+
+    .add-recipe-container {
+        max-width: 95%;
+        padding: 20px;
+    }
+
+    .add-btn,
+    .submit-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
