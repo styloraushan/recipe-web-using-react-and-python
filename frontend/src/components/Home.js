@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link, useNavigate } from "react-router-dom";
 import northIndianFood from "../data/northfood";
 import { FaHeart, FaStar } from "react-icons/fa";
 
 const Home = () => {
-  // Show the first 8 recipes
+  const navigate = useNavigate();
+  const [favorites, setFavorites] = useState([]); // State to store saved favorites
+
+  // Function to save a recipe as favorite
+  const handleSaveFavorite = (food) => {
+    if (favorites.some((fav) => fav.id === food.id)) {
+      // Remove from favorites if already saved
+      setFavorites(favorites.filter((fav) => fav.id !== food.id));
+    } else {
+      // Save the recipe to favorites
+      setFavorites([...favorites, food]);
+    }
+  };
   const [displayedFood] = useState(northIndianFood.slice(0, 8));
 
   const headings = [
@@ -25,8 +37,8 @@ const Home = () => {
   }, [headings.length]);
 
   const styles = {
-    homeContainer: { padding: "20px", backgroundColor: "#f8f9fa" },
-    header: { textAlign: "center", marginBottom: "30px" },
+    homeContainer: { padding: "20px", backgroundColor: "#f8f9fa", textAlign: "center" },
+    header: { marginBottom: "30px" },
     headerTitle: {
       fontSize: "3rem",
       fontWeight: "bold",
@@ -80,6 +92,17 @@ const Home = () => {
     starRating: { color: "orange", margin: "5px 0" },
     starIcon: { marginRight: "3px" },
     foodDescription: { fontSize: "1rem", color: "#777", lineHeight: "1.5" },
+    seeMoreBtn: {
+      marginTop: "20px",
+      padding: "10px 20px",
+      fontSize: "1rem",
+      backgroundColor: "#ff8c00",
+      color: "white",
+      border: "none",
+      borderRadius: "5px",
+      cursor: "pointer",
+      transition: "background 0.3s",
+    },
   };
 
   return (
@@ -91,16 +114,21 @@ const Home = () => {
 
       <div style={styles.foodList}>
         {displayedFood.map((food, index) => (
-          <Link
-            key={index}
-            to="/recipeinfo"
-            state={{ food }} // Pass the food details via state
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <div style={styles.foodItem}>
-              <div style={styles.favoriteIcon}>
-                <FaHeart />
-              </div>
+          <div key={index} style={styles.foodItem}>
+            {/* Save (Heart) Button */}
+            <button
+              style={styles.favoriteIcon}
+              onClick={() => handleSaveFavorite(food)}
+            >
+              <FaHeart color={favorites.some((fav) => fav.id === food.id) ? "red" : "gray"} />
+            </button>
+
+            {/* Food Details */}
+            <Link
+              to="/recipeinfo"
+              state={{ food }}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
               <img src={food.image} alt={food.name} style={styles.foodImage} />
               <div style={styles.foodInfo}>
                 <h3 style={styles.foodName}>{food.name}</h3>
@@ -111,10 +139,14 @@ const Home = () => {
                 </div>
                 <p style={styles.foodDescription}>{food.description}</p>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         ))}
       </div>
+
+      <button style={styles.seeMoreBtn} onClick={() => navigate("/allrecipes")}>
+        See More
+      </button>
     </div>
   );
 };

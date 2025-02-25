@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaStar } from "react-icons/fa";
+import Navbar from "../components/Navbar";
+import Ingredient from "../components/Ingredients";
 
 const styles = {
   homeContainer: { padding: "20px", backgroundColor: "#f8f9fa" },
@@ -34,9 +36,8 @@ const styles = {
   },
   favoriteIcon: {
     position: "absolute",
-    top: "-10px",
-    left: "50%",
-    transform: "translateX(-50%)",
+    top: "10px",
+    right: "10px",
     background: "pink",
     width: "40px",
     height: "40px",
@@ -45,6 +46,7 @@ const styles = {
     justifyContent: "center",
     borderRadius: "50%",
     color: "white",
+    cursor: "pointer",
   },
   foodImage: {
     width: "100%",
@@ -53,6 +55,8 @@ const styles = {
     transition: "transform 0.5s ease",
     borderRadius: "10px",
   },
+  starRating: { color: "orange", margin: "5px 0" },
+  starIcon: { marginRight: "3px" },
   foodInfo: { padding: "10px", textAlign: "center", backgroundColor: "#fff" },
   foodName: { fontSize: "1rem", fontWeight: "bold", color: "#333", marginTop: "0" },
   foodDescription: { fontSize: "1rem", color: "#777", lineHeight: "1.5" },
@@ -62,11 +66,14 @@ const AllRecipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [savedRecipes, setSavedRecipes] = useState([]);
+
+  const loggedInUserId = localStorage.getItem("user_id"); // Retrieve logged-in user ID
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch("http://localhost:5000/recipes/api/recipe-list");
+        const response = await fetch("http://localhost:5000/recipes/api/allrecipes");
         if (!response.ok) {
           throw new Error("Failed to fetch recipes");
         }
@@ -82,37 +89,77 @@ const AllRecipes = () => {
     fetchRecipes();
   }, []);
 
+  const handleSaveRecipe = async (recipeId) => {
+    if (!loggedInUserId) {
+      alert("Please log in to save recipes!");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/recipes/save-recipe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: loggedInUserId,
+          recipe_id: recipeId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save recipe");
+      }
+
+      setSavedRecipes([...savedRecipes, recipeId]);
+      alert("Recipe saved successfully!");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error saving recipe");
+    }
+  };
+
   return (
-    <div style={styles.homeContainer}>
-      <header style={styles.header}>
-        <h1 style={styles.headerTitle}>All Recipes</h1>
-        <p style={styles.headerSubtitle}>Discover the best flavors of Food</p>
-      </header>
+    <div>
+      <Navbar />
+      <div style={styles.homeContainer}>
+        <header style={styles.header}>
+          <h1 style={styles.headerTitle}>All Recipes</h1>
+          <p style={styles.headerSubtitle}>Discover the best flavors of Food</p>
+        </header>
 
-      {loading && <p>Loading recipes...</p>}
-      {error && <p>Error: {error}</p>}
+        {loading && <p>Loading recipes...</p>}
+        {error && <p>Error: {error}</p>}
 
-      <div style={styles.foodList}>
-        {recipes.map((recipe, index) => (
-          <Link
-            key={index}
-            to="/recipeinfo"
-            state={{ recipe }} // Passing recipe details via state
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <div style={styles.foodItem}>
-              <div style={styles.favoriteIcon}>
+        <div style={styles.foodList}>
+          {recipes.map((recipe) => (
+            <div key={recipe.id} style={styles.foodItem}>
+              <div
+                style={{
+                  ...styles.favoriteIcon,
+                  background: savedRecipes.includes(recipe.id) ? "red" : "pink",
+                }}
+                onClick={() => handleSaveRecipe(recipe.id)}
+              >
                 <FaHeart />
               </div>
-              <img src={recipe.image} alt={recipe.name} style={styles.foodImage} />
-              <div style={styles.foodInfo}>
-                <h3 style={styles.foodName}>{recipe.name}</h3>
-                <p style={styles.foodDescription}>{recipe.description}</p>
-              </div>
+              <Link to={`/recipedetails/${recipe.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                <img src={recipe.image} alt={recipe.name} style={styles.foodImage} />
+                <div style={styles.foodInfo}>
+                  <h3 style={styles.foodName}>{recipe.name} ({recipe.category})</h3>
+                  <div style={styles.starRating}>
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} style={styles.starIcon} />
+                    ))}
+                  </div>
+                  <p style={styles.foodDescription}>{recipe.description}</p>
+                </div>
+              </Link>
             </div>
-          </Link>
-        ))}
+          ))}
+        </div>
       </div>
+      <Ingredient />
     </div>
   );
 };

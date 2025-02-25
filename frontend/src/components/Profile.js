@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";  // Make sure to install axios
+import axios from "axios";
 import "./Profile.css";
 
 const Profile = () => {
@@ -8,16 +8,14 @@ const Profile = () => {
   const [username, setUsername] = useState("Guest");
   const navigate = useNavigate();
 
-  // Fetch user details on component mount
   useEffect(() => {
-    const userId = localStorage.getItem("user_id"); // Assuming user_id is stored in localStorage
+    const userId = localStorage.getItem("user_id");
     if (userId) {
       setIsLoggedIn(true);
-      // Fetch user details from backend using the user_id
       axios
         .get(`http://localhost:5000/auth/user/${userId}`)
         .then((response) => {
-          setUsername(response.data.username);  // Assuming the API returns a 'username' field
+          setUsername(response.data.username);
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
@@ -26,20 +24,20 @@ const Profile = () => {
     }
   }, []);
 
-  const handleLoginClick = () => {
-    navigate("/login");
-  };
+  const handleLoginClick = () => navigate("/login");
+  const handleSignupClick = () => navigate("/signup");
 
   const handleProfileClick = () => {
-    navigate("/viewprofile");
-  };
-
-  const handleSignupClick = () => {
-    navigate("/signup");
+    const userId = localStorage.getItem("user_id");
+    if (userId) {
+      navigate(`/viewprofile/${userId}`); // ✅ Correct dynamic navigation
+    } else {
+      navigate("/login"); // Redirects to login if not logged in
+    }
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("user_id"); // Clear user_id from localStorage on logout
+    localStorage.removeItem("user_id");
     setIsLoggedIn(false);
     setUsername("Guest");
     navigate("/login");
@@ -57,17 +55,11 @@ const Profile = () => {
       <button className="btn" onClick={handleProfileClick}>View Profile</button>
 
       {isLoggedIn ? (
-        <button className="btn logout" onClick={handleLogout}>
-          Logout
-        </button>
+        <button className="btn logout" onClick={handleLogout}>Logout</button>
       ) : (
         <>
-          <button className="btn login" onClick={handleLoginClick}>
-            Login
-          </button>
-          <button className="btn signup" onClick={handleSignupClick}>
-            Sign Up
-          </button>
+          <button className="btn login" onClick={handleLoginClick}>Login</button>
+          <button className="btn signup" onClick={handleSignupClick}>Sign Up</button>
         </>
       )}
     </div>

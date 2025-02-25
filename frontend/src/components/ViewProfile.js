@@ -3,15 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./ViewProfile.css";
 import Navbar from "./Navbar";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import UpdateUser from "../Pages/UpdateUser";
 import AddRecipe from "../Pages/AddRecipe";
 
-
 const ViewProfile = () => {
   const { user_id } = useParams();
- 
   const [userData, setUserData] = useState(null);
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [activeSection, setActiveSection] = useState("recipes");
@@ -20,37 +18,28 @@ const ViewProfile = () => {
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
     if (userId) {
+      // Fetch user data
       axios
         .get(`http://localhost:5000/auth/user/${userId}`)
         .then((response) => {
           setUserData(response.data);
-          setSavedRecipes(
-            response.data.savedRecipes || [
-              {
-                name: "Rogan Josh",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRALenBlSNumBnitd9xNeUCNp9xuBdU_GwtIw&s",
-                description: "A traditional Kashmiri dish of lamb cooked in aromatic, rich spices, including saffron and cardamom."
-              },
-              {
-                name: "Aloo Gobi",
-                image: "https://th.bing.com/th/id/OIP.ZySaC8BuGfrW0V5ZW8TWJAHaHa?rs=1&pid=ImgDetMain",
-                description: "A vegetarian dish made with potatoes and cauliflower cooked with turmeric, cumin, and other spices."
-              },
-              {
-                name: "Chole Bhature",
-                image: "https://2.bp.blogspot.com/-OU_L_dlS_G0/Wx9rVpMKeVI/AAAAAAAAAEE/lL6pyCPBVoQkBxbpYZg9wRt6-Lce51C7ACLcBGAs/s1600/imperial%2Binn.jpg",
-                description: "Spicy chickpeas served with a deep-fried bread called 'bhature.'"
-              },
-              {
-                name: "Dal Makhani",
-                image: "https://recipes.timesofindia.com/thumb/53097626.cms?imgsize=156015&width=800&height=800",
-                description: "A creamy lentil dish made with black lentils and kidney beans, cooked with butter and cream."
-              }
-            ]
-          );
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
+        });
+
+      // Fetch saved recipes separately
+      axios
+        .get(`http://localhost:5000/recipes/saved-recipes/${userId}`)
+        .then((response) => {
+          if (response.data && response.data.length > 0) {
+            setSavedRecipes(response.data); // ✅ Use fetched saved recipes
+          } else {
+            setSavedRecipes([]); // Empty array if no saved recipes
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching saved recipes:", error);
         });
     }
   }, []);
@@ -58,9 +47,9 @@ const ViewProfile = () => {
   const handleAddRecipe = () => setActiveSection("addRecipe");
   const handleSavedRecipes = () => setActiveSection("recipes");
   const handleUpdateAccount = () => {
-    const userId = localStorage.getItem("user_id"); // Get user ID
-    setActiveSection("updateAccount"); // Show UpdateUser inside ViewProfile
-    navigate(`/update/${userId}`); // Navigate to update page
+    const userId = localStorage.getItem("user_id");
+    setActiveSection("updateAccount");
+    navigate(`/update/${userId}`);
   };
 
   const handleDeactivateAccount = () => {
@@ -82,7 +71,6 @@ const ViewProfile = () => {
     <div>
       <Navbar />
       <div className="view-profile-container">
-
         <div className="profile-section">
           <h2>User Profile</h2>
           <div className="profile-details">
@@ -108,44 +96,38 @@ const ViewProfile = () => {
         <div className="recipes-sections">
           {activeSection === "recipes" && (
             <div className="recipes-sectionss">
-              <h3>Added Recipes</h3>
+              <h3>Saved Recipes</h3>
               <div className="recipes-grids" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '20px' }}>
-                {savedRecipes.map((recipe, index) => (
-                  <Link
-                    to="/recipeinfo"
-                    key={index}
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                  >
-                    <div className="recipe-cards">
-                      <img
-                        src={recipe.image}
-                        alt={recipe.name}
-                        className="recipe-images"
-                        style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '8px' }}
-                      />
-                      <h4>{recipe.name}</h4>
-                      <p>{recipe.description}</p>
-                    </div>
-                  </Link>
-                ))}
+                {savedRecipes.length > 0 ? (
+                  savedRecipes.map((recipe) => (
+                    <Link to={`/recipedetails/${recipe.id}`} key={recipe.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                      <div className="recipe-cards">
+                        <img
+                          src={recipe.image}
+                          alt={recipe.name}
+                          className="recipe-images"
+                          style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '8px' }}
+                        />
+                        <h4>{recipe.name}</h4>
+                        <p>{recipe.description}</p>
+                      </div>
+                    </Link>
+                  ))
+                ) : (
+                  <p>No saved recipes found.</p>
+                )}
               </div>
             </div>
-
           )}
 
           {activeSection === "addRecipe" && (
             <div className="add-recipe-section">
-              <div>
-                <AddRecipe />  {/* ✅ Proper component syntax */}
-              </div>
+              <AddRecipe />
             </div>
           )}
 
-<div>
-      {activeSection === "updateAccount" && <UpdateUser />}
-    </div>
+          {activeSection === "updateAccount" && <UpdateUser />}
         </div>
-
       </div>
     </div>
   );

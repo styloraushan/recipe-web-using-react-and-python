@@ -104,7 +104,31 @@ form textarea {
     font-weight: 600;
     transition: 0.3s ease-in-out;
     margin-top: 15px;
-}
+}/* Toggle Button Styles */
+.toggle-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #4caf50;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s ease-in-out;
+    margin-top: 15px;
+  }
+  
+  .toggle-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .toggle-btn:active {
+    background-color: #3e8e41;
+    transform: scale(0.98);
+  }
 
 .add-btn {
     background-color: #2196f3;
@@ -134,5 +158,99 @@ form select {
     .submit-btn {
         font-size: 14px;
         padding: 10px;
+    }
+}
+.user-recipes-container {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.user-recipes-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Grid layout for recipes */
+.recipe-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 3 columns */
+    gap: 20px;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.recipe-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.recipe-card:hover {
+    transform: scale(1.05);
+}
+
+.recipe-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.recipe-card h3 {
+    font-size: 1.4rem;
+    margin: 10px 0 5px;
+    color: #222;
+}
+
+.recipe-card p {
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+    max-width: 90%;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .recipe-card {
+    position: relative; /* Ensures the delete button is positioned correctly */
+  }
+  
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .recipe-list {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 2 columns on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .recipe-list {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 1 column on mobile */
     }
 }
