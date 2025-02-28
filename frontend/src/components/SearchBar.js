@@ -133,7 +133,7 @@ const SearchBar = () => {
                 </div>
 
                 {/* Food Image */}
-                <img src={food.image} alt={food.name} />
+                <img src={food.image} alt={food.name} className="food-image" />
 
                 <div className="food-info">
                   <h3>{food.name}</h3>

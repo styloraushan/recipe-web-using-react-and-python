@@ -43,3 +43,14 @@
     color: #333;
   }
   
+
+  @media (max-width: 450px) {
+
+    .protips-container {
+     
+      width: 470px;
+  }
+  .chefs-container {
+    width: 470px;
+  }
+  }

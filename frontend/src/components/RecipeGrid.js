@@ -107,7 +107,7 @@ const RecipeGrid = () => {
     <div>
       <Navbar />
 
-      <div className="recipe-container">
+      <div className="recipe-containers">
         <h2 className="title">
           Top Recipes <span className="highlight">During the last {selectedFilter}</span>
         </h2>

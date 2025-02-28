@@ -82,16 +82,12 @@
     flex-grow: 1;
     /* Take remaining space */
     width: calc(100% - 440px);
+    
     /* Adjust width considering profile */
 }
 
 /* Recipes Grid */
-.recipes-grids {
-    display: grid;
-    grid-template-columns: repeat(3, 0.5rem);
-    /* 3 columns */
-    gap: 20px;
-}
+
 
 /* Recipe Card */
 .recipe-cards {
@@ -120,13 +116,24 @@
 }
 
 /* Responsive Design */
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .recipes-sections {
+        width: 100%;
+    }
+
+    .recipes-grids {
+        grid-template-columns: repeat(2, minmax(200px, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
     .view-profile-container {
         flex-direction: column;
     }
 
     .recipes-grids {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
     }
 
     .recipes-sections {
@@ -138,4 +145,25 @@
     .recipes-grids {
         grid-template-columns: 1fr;
     }
+
+    .profile-section {
+       
+        width: 385px;
+      
+    }
+    .recipes-sections {
+       
+        max-width: 385px;
+      
+    }
+    .view-profile-container {
+        flex-direction: column;
+    }
+    .recipes-grids {
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Adds spacing between items */
+    }
+
+
 }

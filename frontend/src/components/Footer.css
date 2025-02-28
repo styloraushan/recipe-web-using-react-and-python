@@ -177,3 +177,8 @@
 .footer-links a:hover {
   text-decoration: underline;
 }
+@media (max-width: 450px) {
+  .footer{
+    width: 480px;
+  }
+}

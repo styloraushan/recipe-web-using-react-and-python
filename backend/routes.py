@@ -126,8 +126,8 @@ def get_all_users():
 def get_apirecipes(ingredients, diet):
     url = "https://api.spoonacular.com/recipes/complexSearch"
     params = {
-        # "apiKey": "9cfad92bb48d4c398dbf066de10f40f5",  # API Key
-         "apiKey": "7a2ffaf6ded749ff8ab77a86ef88989d",  # API Key
+        "apiKey": "9cfad92bb48d4c398dbf066de10f40f5",  # API Key
+        #  "apiKey": "7a2ffaf6ded749ff8ab77a86ef88989d",  # API Key
         "query": ingredients,
         "diet": diet if diet != "None" else "",
         "number": 10,

@@ -98,4 +98,16 @@
       width: 80%;
     }
   }
-  
+  @media (max-width: 450px) {
+    .team-section {
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      width: 480px;
+  }
+
+  }

@@ -1,4 +1,4 @@
-.recipe-container {
+.recipe-containers {
     text-align: center;
     max-width: 1000px;
     margin: auto;
@@ -72,4 +72,24 @@
     font-size: 14px;
     color: #555;
   }
-  
+  /* Responsive Design */
+@media (max-width: 1024px) {
+  .recipes-sections {
+      width: 100%;
+  }
+
+  .recipes-grids {
+      grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+}
+
+
+@media (max-width: 480px) {
+  .recipe-containers {
+    width: 420px;
+    margin-left: 35px;
+  }
+  .recipes-sections {
+    width: 370px;
+}
+}

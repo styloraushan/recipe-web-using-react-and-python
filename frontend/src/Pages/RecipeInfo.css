@@ -30,7 +30,8 @@
   max-width: 400px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem; /* Centers the image horizontally */
+  display: block; /* Ensures it respects margin auto */
 }
 
 .uploaded-photo {
@@ -225,6 +226,7 @@
   background: #fff8f0;
   border-radius: 12px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  
 }
 
 .comments-section h3 {
@@ -295,8 +297,10 @@ button {
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s ease;
-  margin-top: 10px;
+  /* margin-top: 10px; */
+ 
 }
+
 
 button:hover {
   background: #e67e22;
@@ -470,4 +474,28 @@ button:hover {
   height: 24px;
   transition: color 0.2s;
   cursor: pointer;
+}@media (max-width: 450px) {
+
+  .recipe-container {
+    text-align: center;
+    padding: 40px 20px;
+    width: 580px;
+}
+.comment-textarea {
+ 
+  width: 350px;
+}
+button {
+  background: #ff914d;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease; /* Fixed transition syntax */
+  margin: 10px auto; /* Centers the button */
+ 
+  text-align: center;
+}
 }

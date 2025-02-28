@@ -55,7 +55,7 @@ export default function RecipeInfo() {
           <img src={food.image} alt={food.name} className="recipe-image" />
         </div>
         <div className="flex justify-center mt-2 no-print">
-          <Camera className="text-gray-500 w-8 h-8" />
+          {/* <Camera className="text-gray-500 w-8 h-8" /> */}
         </div>
 
         {/* Uploaded Photos */}

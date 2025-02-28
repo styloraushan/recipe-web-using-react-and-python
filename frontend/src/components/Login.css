@@ -101,3 +101,10 @@ input {
 .register-link span:hover {
   text-decoration: underline;
 }
+
+
+@media (max-width: 450px) {
+  .login-container {
+    width: 300px;
+  }
+}
