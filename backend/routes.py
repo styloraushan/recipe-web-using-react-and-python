@@ -3,6 +3,7 @@ from flask_bcrypt import Bcrypt
 import mysql.connector
 import requests
 from config import Config 
+from datetime import datetime
 
 # Initialize Flask app and bcrypt
 app = Flask(__name__)
@@ -68,6 +69,13 @@ def get_user_details(user_id):
             return jsonify({"error": "User not found"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+
+
+
+
+
 
 # Update User Details Route
 @auth_routes.route('/user/<int:user_id>', methods=['PUT'])
@@ -137,24 +145,6 @@ def search():
     
     recipes = get_apirecipes(ingredients, diet)
     return jsonify(recipes)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # ✅ Define Blueprint for Feedback Routes
@@ -509,5 +499,174 @@ def get_saved_recipes(user_id):
         ]
         
         return jsonify(recipes_list), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+
+# # post comments for a recipe
+# @recipe_routes.route('/api/comments', methods=['POST'])
+# def post_comment():
+#     try:
+#         data = request.get_json()
+
+#         # Validate required fields
+#         recipe_id = data.get("recipe_id")
+#         username = data.get("username")
+#         content = data.get("content")
+
+#         if not all([recipe_id, username, content]):
+#             return jsonify({"error": "Missing required fields"}), 400
+
+#         created_at = datetime.now()
+
+#         # Use MySQL-compatible INSERT
+#         cursor.execute(
+#             "INSERT INTO comment (recipe_id, username, content, created_at) VALUES (%s, %s, %s, %s)",
+#             (recipe_id, username, content, created_at)
+#         )
+        
+#         # Get the last inserted ID
+#         new_id = cursor.lastrowid
+#         db.commit()
+
+#         return jsonify({
+#             "id": new_id,
+#             "recipe_id": recipe_id,
+#             "username": username,
+#             "content": content,
+#             "created_at": created_at.isoformat()
+#         }), 201
+
+#     except Exception as e:
+#         db.rollback()
+#         print("Error posting comment:", e)
+#         return jsonify({"error": str(e)}), 500
+    
+
+
+# @recipe_routes.route('/api/comments/<int:recipe_id>', methods=['GET'])
+# def get_comments(recipe_id):
+#     try:
+#         # Fetch comments for the specific recipe_id
+#         cursor.execute(
+#             "SELECT id, recipe_id, username, content, created_at FROM comment WHERE recipe_id = %s ORDER BY created_at DESC",
+#             (recipe_id,)
+#         )
+#         comments = cursor.fetchall()
+
+#         # Format the comments as JSON
+#         comments_list = [
+#             {
+#                 "id": row[0],
+#                 "recipe_id": row[1],
+#                 "username": row[2],
+#                 "content": row[3],
+#                 "created_at": row[4].isoformat() if row[4] else None
+#             }
+#             for row in comments
+#         ]
+
+#         return jsonify(comments_list), 200
+
+#     except Exception as e:
+#         print("Error fetching comments:", e)
+#         return jsonify({"error": str(e)}), 500
+
+
+
+# # Get UserName Details Route
+# @recipe_routes.route('/username/<int:user_id>', methods=['GET'])
+# def get_username_details(user_id):
+#     try:
+#         cursor.execute("SELECT username FROM users WHERE id = %s", (user_id,))
+#         user = cursor.fetchone()
+
+#         if user:
+#             return jsonify({
+#                 "user_id": user_id,
+#                 "username": user[0],
+               
+#             })
+#         else:
+#             return jsonify({"error": "User not found"}), 404
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+
+
+@recipe_routes.route('/api/comments', methods=['POST'])
+def post_comment():
+    try:
+        data = request.get_json()
+        recipe_id = data.get("recipe_id")
+        user_id = data.get("user_id")  
+        content = data.get("content")
+
+        if not all([recipe_id, user_id, content]):
+            return jsonify({"error": "Missing required fields"}), 400
+
+        created_at = datetime.utcnow()  # Use UTC for consistency
+
+        # Insert into database
+        with db.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO comment (recipe_id, user_id, content, created_at) VALUES (%s, %s, %s, %s)",
+                (recipe_id, user_id, content, created_at)
+            )
+            db.commit()
+            new_id = cursor.lastrowid
+
+            # Fetch username dynamically
+            cursor.execute("SELECT username FROM users WHERE id = %s", (user_id,))
+            user = cursor.fetchone()
+            username = user[0] if user else "Unknown"
+
+        return jsonify({
+            "id": new_id,
+            "recipe_id": recipe_id,
+            "user_id": user_id,
+            "username": username,
+            "content": content,
+            "created_at": created_at.isoformat()
+        }), 201
+
+    except mysql.connector.Error as e:
+        db.rollback()
+        return jsonify({"error": f"Database error: {str(e)}"}), 500
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@recipe_routes.route('/api/comments/<int:recipe_id>', methods=['GET'])
+def get_comments(recipe_id):
+    try:
+        with db.cursor() as cursor:
+            cursor.execute("""
+                SELECT c.id, c.recipe_id, u.username, c.content, c.created_at 
+                FROM comment c
+                JOIN users u ON c.user_id = u.id
+                WHERE c.recipe_id = %s
+                ORDER BY c.created_at DESC
+            """, (recipe_id,))
+            
+            comments = cursor.fetchall()
+
+        comments_list = [
+            {
+                "id": row[0],
+                "recipe_id": row[1],
+                "username": row[2],  
+                "content": row[3],
+                "created_at": row[4].isoformat() if row[4] else None
+            }
+            for row in comments
+        ]
+
+        return jsonify(comments_list), 200
+
+    except mysql.connector.Error as e:
+        return jsonify({"error": f"Database error: {str(e)}"}), 500
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500

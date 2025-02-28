@@ -190,7 +190,7 @@ export default function RecipeInfo() {
         {/* Comments Section */}
         <div className="comments-section no-print">
           <h3>Comments</h3>
-          <textarea placeholder="Add a comment..."></textarea>
+          <textarea    className="comment-textarea" placeholder="Add a comment..."></textarea>
           <button>Post Comment</button>
         </div>
       </div>

@@ -148,7 +148,7 @@
 
 // export default AddRecipe;
 import React, { useState, useEffect } from "react";
-import { FaHeart, FaStar , FaTrash } from "react-icons/fa";
+import { FaHeart, FaStar, FaTrash } from "react-icons/fa";
 import "./AddRecipe.css";
 import { Link } from "react-router-dom";
 
@@ -177,12 +177,12 @@ const AddRecipe = ({
   const handleDelete = async (recipeId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this recipe?");
     if (!confirmDelete) return;
-  
+
     try {
       const response = await fetch(`http://localhost:5000/recipes/api/delete-recipe/${recipeId}`, {
         method: "DELETE",
       });
-  
+
       if (response.ok) {
         alert("Recipe deleted successfully!");
         // Refresh recipes after deletion
@@ -297,87 +297,87 @@ const AddRecipe = ({
   };
 
   return (
-//     <div className="add-recipe-container">
-//       <h2>Add New Recipe</h2>
-//       {userId ? <p>Logged in as User ID: {userId}</p> : <p>Please log in to add a recipe.</p>}
-//       <form onSubmit={handleSubmit}>
-//         <input type="text" name="name" placeholder="Recipe Name" value={recipe.name} onChange={handleChange} required />
-//         <input type="text" name="image" placeholder="Image URL" value={recipe.image} onChange={handleChange} />
-//         <textarea name="description" placeholder="Recipe Description" value={recipe.description} onChange={handleChange} required />
+    //     <div className="add-recipe-container">
+    //       <h2>Add New Recipe</h2>
+    //       {userId ? <p>Logged in as User ID: {userId}</p> : <p>Please log in to add a recipe.</p>}
+    //       <form onSubmit={handleSubmit}>
+    //         <input type="text" name="name" placeholder="Recipe Name" value={recipe.name} onChange={handleChange} required />
+    //         <input type="text" name="image" placeholder="Image URL" value={recipe.image} onChange={handleChange} />
+    //         <textarea name="description" placeholder="Recipe Description" value={recipe.description} onChange={handleChange} required />
 
-//         <h4>Cooking Details</h4>
-//         <div className="cooking-details-row">
-//           <input type="text" name="servings" placeholder="Servings" value={recipe.cookingDetails.servings} onChange={handleCookingDetailsChange} />
-//           <input type="text" name="prep" placeholder="Prep Time" value={recipe.cookingDetails.prep} onChange={handleCookingDetailsChange} />
-//           <input type="text" name="cook" placeholder="Cook Time" value={recipe.cookingDetails.cook} onChange={handleCookingDetailsChange} />
-//           <input type="text" name="ready" placeholder="Ready In" value={recipe.cookingDetails.ready} onChange={handleCookingDetailsChange} />
-//         </div>
+    //         <h4>Cooking Details</h4>
+    //         <div className="cooking-details-row">
+    //           <input type="text" name="servings" placeholder="Servings" value={recipe.cookingDetails.servings} onChange={handleCookingDetailsChange} />
+    //           <input type="text" name="prep" placeholder="Prep Time" value={recipe.cookingDetails.prep} onChange={handleCookingDetailsChange} />
+    //           <input type="text" name="cook" placeholder="Cook Time" value={recipe.cookingDetails.cook} onChange={handleCookingDetailsChange} />
+    //           <input type="text" name="ready" placeholder="Ready In" value={recipe.cookingDetails.ready} onChange={handleCookingDetailsChange} />
+    //         </div>
 
-//         <h4>Ingredients</h4>
-//         {recipe.ingredients.map((ing, index) => (
-//           <div key={index} className="ingredient-row">
-//             <input type="text" name="ingredient" placeholder="Ingredient" value={ing.ingredient} onChange={(e) => handleIngredientChange(index, e)} />
-//             <input type="text" name="metric" placeholder="Metric" value={ing.metric} onChange={(e) => handleIngredientChange(index, e)} />
-//             <input type="text" name="us" placeholder="US Measurement" value={ing.us} onChange={(e) => handleIngredientChange(index, e)} />
-//           </div>
-//         ))}
-//         <button type="button" onClick={addIngredient} className="add-btn">+ Add Ingredient</button>
+    //         <h4>Ingredients</h4>
+    //         {recipe.ingredients.map((ing, index) => (
+    //           <div key={index} className="ingredient-row">
+    //             <input type="text" name="ingredient" placeholder="Ingredient" value={ing.ingredient} onChange={(e) => handleIngredientChange(index, e)} />
+    //             <input type="text" name="metric" placeholder="Metric" value={ing.metric} onChange={(e) => handleIngredientChange(index, e)} />
+    //             <input type="text" name="us" placeholder="US Measurement" value={ing.us} onChange={(e) => handleIngredientChange(index, e)} />
+    //           </div>
+    //         ))}
+    //         <button type="button" onClick={addIngredient} className="add-btn">+ Add Ingredient</button>
 
-//         <h4>Directions</h4>
-//         {recipe.directions.map((dir, index) => (
-//           <textarea key={index} placeholder={`Step ${index + 1}`} value={dir} onChange={(e) => handleDirectionChange(index, e)} />
-//         ))}
-//         <button type="button" onClick={addDirection} className="add-btn">+ Add Step</button>
+    //         <h4>Directions</h4>
+    //         {recipe.directions.map((dir, index) => (
+    //           <textarea key={index} placeholder={`Step ${index + 1}`} value={dir} onChange={(e) => handleDirectionChange(index, e)} />
+    //         ))}
+    //         <button type="button" onClick={addDirection} className="add-btn">+ Add Step</button>
 
-//         <h4>Category</h4>
-//         <select name="category" value={recipe.category} onChange={handleChange}>
-//           {Object.entries(categories).map(([cat, value]) => (
-//             <option key={value} value={cat}>{cat}</option>
-//           ))}
-//         </select>
+    //         <h4>Category</h4>
+    //         <select name="category" value={recipe.category} onChange={handleChange}>
+    //           {Object.entries(categories).map(([cat, value]) => (
+    //             <option key={value} value={cat}>{cat}</option>
+    //           ))}
+    //         </select>
 
-//         <button type="submit" className="submit-btn">Add Recipe</button>
-//       </form>
+    //         <button type="submit" className="submit-btn">Add Recipe</button>
+    //       </form>
 
-//       {/* Toggle Button for Showing Recipes */}
-//       <button type="button" onClick={() => setShowRecipes(!showRecipes)} className="toggle-btn">
-//         {showRecipes ? "Hide Recipes" : "Show Recipes"}
-//       </button>
+    //       {/* Toggle Button for Showing Recipes */}
+    //       <button type="button" onClick={() => setShowRecipes(!showRecipes)} className="toggle-btn">
+    //         {showRecipes ? "Hide Recipes" : "Show Recipes"}
+    //       </button>
 
-//       {/* Conditionally Render Recipes */}
-//       {showRecipes && (
-//        <div className="user-recipes-container">
-//        <h2>Your Recipes</h2>
-//        {userRecipes.length === 0 ? <p>No recipes added yet.</p> : (
-//            <div className="recipe-list">
-//            {userRecipes.map((rec) => (
-//              <Link
-//                key={rec[0]}
-//                to={`/recipedetails/${rec[0]}`} // ✅ Navigates to the correct recipe details page
-//                style={{ textDecoration: "none", color: "inherit" }}
-//              >
-//                <div className="recipe-card">
-//                  <img src={rec[2]} alt={rec[1]} />
-//                  <h3>{rec[1]}</h3>
-//                  <div>
-//                    {[...Array(5)].map((_, i) => (
-//                      <FaStar key={i} color="gold" />
-//                    ))}
-//                  </div>
-//                  <p>{rec[3]}</p>
-//                </div>
-//              </Link>
-//            ))}
-//          </div>
-//        )}
-//    </div>
-//       )}
-//     </div>
-//   );
-// };
+    //       {/* Conditionally Render Recipes */}
+    //       {showRecipes && (
+    //        <div className="user-recipes-container">
+    //        <h2>Your Recipes</h2>
+    //        {userRecipes.length === 0 ? <p>No recipes added yet.</p> : (
+    //            <div className="recipe-list">
+    //            {userRecipes.map((rec) => (
+    //              <Link
+    //                key={rec[0]}
+    //                to={`/recipedetails/${rec[0]}`} // ✅ Navigates to the correct recipe details page
+    //                style={{ textDecoration: "none", color: "inherit" }}
+    //              >
+    //                <div className="recipe-card">
+    //                  <img src={rec[2]} alt={rec[1]} />
+    //                  <h3>{rec[1]}</h3>
+    //                  <div>
+    //                    {[...Array(5)].map((_, i) => (
+    //                      <FaStar key={i} color="gold" />
+    //                    ))}
+    //                  </div>
+    //                  <p>{rec[3]}</p>
+    //                </div>
+    //              </Link>
+    //            ))}
+    //          </div>
+    //        )}
+    //    </div>
+    //       )}
+    //     </div>
+    //   );
+    // };
 
-// export default AddRecipe;
-<div className="add-recipe-container">
+    // export default AddRecipe;
+    <div className="add-recipe-container">
       <h2>Add New Recipe</h2>
       {userId ? <p>Logged in as User ID: {userId}</p> : <p>Please log in to add a recipe.</p>}
 

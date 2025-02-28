@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import "./Ingredient.css"; 
+import "./Ingredient.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import Teaminfo from "../Pages/Teaminfo"
 
 const ingredientsList = [
   { name: "Tomato", img: "https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg" },
@@ -34,7 +35,7 @@ export default function Ingredient() {
   const [diet, setDiet] = useState("None");
   const [searchSubmitted, setSearchSubmitted] = useState(false);
   const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -43,34 +44,34 @@ export default function Ingredient() {
     setLoading(true);
 
     try {
-        const ingredientsArray = ingredient
-          .split(",")
-          .map((item) => item.trim())
-          .filter((item) => item !== "");
+      const ingredientsArray = ingredient
+        .split(",")
+        .map((item) => item.trim())
+        .filter((item) => item !== "");
 
-        const response = await fetch('http://localhost:5000/auth/api/search', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                ingredients: ingredientsArray,
-                diet: diet,
-            }),
-        });
+      const response = await fetch('http://localhost:5000/auth/api/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ingredients: ingredientsArray,
+          diet: diet,
+        }),
+      });
 
-        const data = await response.json();
-        console.log("API Response:", data);
+      const data = await response.json();
+      console.log("API Response:", data);
 
-        if (data.results) {
-            setRecipes(data.results);
-        } else {
-            console.error('Error fetching recipes:', data.error);
-        }
+      if (data.results) {
+        setRecipes(data.results);
+      } else {
+        console.error('Error fetching recipes:', data.error);
+      }
     } catch (error) {
-        console.error('Fetch Error:', error);
+      console.error('Fetch Error:', error);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -149,6 +150,7 @@ export default function Ingredient() {
           </div>
         )}
       </div>
+      <div><Teaminfo></Teaminfo></div>
       <Footer />
     </div>
   );

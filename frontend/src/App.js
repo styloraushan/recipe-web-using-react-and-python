@@ -37,18 +37,19 @@ function App() {
                 <Route path="/ingredients" element={<Ingredient />} />
                 <Route path="/protips" element={<ProTips />} />
                 <Route path="/recipegrid" element={<RecipeGrid />} />
-                <Route path="/results" element={<Result />} /> {/* ✅ FIXED */}
+                <Route path="/results" element={<Result />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/recipeinfo" element={<RecipeInfo />} />
                 {/* <Route path="/update/:user_id" element={<UpdateUser />} /> */}
                 <Route path="/viewprofile/*" element={<ViewProfile />} />
-<Route path="/update/:user_id" element={<ViewProfile />} />
-<Route path="/allrecipes" element={<AllRecipes />} />
-<Route path="/recipedetails/:recipe_id" element={<RecipeDetails />} /> {/* Dynamic Route */}
-<Route path="/user-recipes" element={<UserRecipes />} />
-<Route path="/savedrecipes/:user_id" element={<ViewProfile />} />
+                <Route path="/update/:user_id" element={<ViewProfile />} />
+                <Route path="/allrecipes" element={<AllRecipes />} />
+                <Route path="/recipedetails/:recipe_id" element={<RecipeDetails />} /> 
 
-             
+                <Route path="/user-recipes" element={<UserRecipes />} />
+                <Route path="/savedrecipes/:user_id" element={<ViewProfile />} />
+
+
             </Routes>
         </Router>
     );

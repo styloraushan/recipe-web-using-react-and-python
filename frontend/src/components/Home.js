@@ -71,7 +71,7 @@ const Home = () => {
       top: "-10px",
       left: "50%",
       transform: "translateX(-50%)",
-      background: "pink",
+      background: "",
       width: "40px",
       height: "40px",
       display: "flex",
@@ -79,6 +79,7 @@ const Home = () => {
       justifyContent: "center",
       borderRadius: "50%",
       color: "white",
+
     },
     foodImage: {
       width: "100%",
@@ -116,12 +117,28 @@ const Home = () => {
         {displayedFood.map((food, index) => (
           <div key={index} style={styles.foodItem}>
             {/* Save (Heart) Button */}
-            <button
-              style={styles.favoriteIcon}
+            <div
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                backgroundColor: "pink",
+                borderRadius: "50%",
+                width: "40px",
+                height: "40px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+                cursor: "pointer",
+              }}
               onClick={() => handleSaveFavorite(food)}
             >
-              <FaHeart color={favorites.some((fav) => fav.id === food.id) ? "red" : "gray"} />
-            </button>
+              <FaHeart
+                size={20}
+                color={favorites.some((fav) => fav.id === food.id) ? "red" : "green"}
+              />
+            </div>
 
             {/* Food Details */}
             <Link
