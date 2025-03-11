@@ -168,6 +168,117 @@
 // };
 
 // export default AllRecipes;
+
+
+
+
+
+
+// import React, { useEffect, useState } from "react";
+// import { Link } from "react-router-dom";
+// import { FaHeart, FaStar } from "react-icons/fa";
+// import Navbar from "../components/Navbar";
+// import Ingredient from "../components/Ingredients";
+// import styles from "./AllRecipes.module.css"; // Import the CSS module
+
+// const AllRecipes = () => {
+//   const [recipes, setRecipes] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [savedRecipes, setSavedRecipes] = useState([]);
+
+//   const loggedInUserId = localStorage.getItem("user_id");
+
+//   useEffect(() => {
+//     const fetchRecipes = async () => {
+//       try {
+//         const response = await fetch("http://localhost:5000/recipes/api/allrecipes");
+//         if (!response.ok) {
+//           throw new Error("Failed to fetch recipes");
+//         }
+//         const data = await response.json();
+//         setRecipes(data);
+//       } catch (error) {
+//         setError(error.message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchRecipes();
+//   }, []);
+
+//   const handleSaveRecipe = async (recipeId) => {
+//     if (!loggedInUserId) {
+//       alert("Please log in to save recipes!");
+//       return;
+//     }
+
+//     try {
+//       const response = await fetch("http://localhost:5000/recipes/save-recipe", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ user_id: loggedInUserId, recipe_id: recipeId }),
+//       });
+
+//       if (!response.ok) {
+//         throw new Error("Failed to save recipe");
+//       }
+
+//       setSavedRecipes([...savedRecipes, recipeId]);
+//       alert("Recipe saved successfully!");
+//     } catch (error) {
+//       console.error("Error:", error);
+//       alert("Error saving recipe");
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <Navbar />
+//       <div className={styles.homeContainer}>
+//         <header className={styles.header}>
+//           <h1 className={styles.headerTitle}>All Recipes</h1>
+//           <p className={styles.headerSubtitle}>Discover the best flavors of Food</p>
+//         </header>
+
+//         {loading && <p>Loading recipes...</p>}
+//         {error && <p>Error: {error}</p>}
+
+//         <div className={styles.foodList}>
+//           {recipes.map((recipe) => (
+//             <div key={recipe.id} className={styles.foodItem}>
+//               <div
+//                 className={`${styles.favoriteIcon} ${savedRecipes.includes(recipe.id) ? styles.saved : ""}`}
+//                 onClick={() => handleSaveRecipe(recipe.id)}
+//               >
+//                 <FaHeart />
+//               </div>
+//               <Link to={`/recipedetails/${recipe.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+//                 <img src={recipe.image} alt={recipe.name} className={styles.foodImage} />
+//                 <div className={styles.foodInfo}>
+//                   <h3 className={styles.foodName}>{recipe.name} ({recipe.category})</h3>
+//                   <div className={styles.starRating}>
+//                     {[...Array(5)].map((_, i) => (
+//                       <FaStar key={i} className={styles.starIcon} />
+//                     ))}
+//                   </div>
+//                   <p className={styles.foodDescription}>{recipe.description}</p>
+//                 </div>
+//               </Link>
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//       <Ingredient />
+//     </div>
+//   );
+// };
+
+// export default AllRecipes;
+
+
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart, FaStar } from "react-icons/fa";
@@ -199,12 +310,33 @@ const AllRecipes = () => {
       }
     };
 
+    const fetchSavedRecipes = async () => {
+      if (!loggedInUserId) return;
+
+      try {
+        const response = await fetch(`http://localhost:5000/recipes/saved/${loggedInUserId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch saved recipes");
+        }
+        const savedData = await response.json();
+        setSavedRecipes(savedData.map((recipe) => recipe.id));
+      } catch (error) {
+        console.error("Error fetching saved recipes:", error);
+      }
+    };
+
     fetchRecipes();
-  }, []);
+    fetchSavedRecipes();
+  }, [loggedInUserId]);
 
   const handleSaveRecipe = async (recipeId) => {
     if (!loggedInUserId) {
       alert("Please log in to save recipes!");
+      return;
+    }
+
+    if (savedRecipes.includes(recipeId)) {
+      alert("Recipe already saved!");
       return;
     }
 
@@ -246,7 +378,7 @@ const AllRecipes = () => {
                 className={`${styles.favoriteIcon} ${savedRecipes.includes(recipe.id) ? styles.saved : ""}`}
                 onClick={() => handleSaveRecipe(recipe.id)}
               >
-                <FaHeart />
+                <FaHeart style={{ color: savedRecipes.includes(recipe.id) ? "red" : "gray" }} />
               </div>
               <Link to={`/recipedetails/${recipe.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                 <img src={recipe.image} alt={recipe.name} className={styles.foodImage} />
@@ -270,3 +402,4 @@ const AllRecipes = () => {
 };
 
 export default AllRecipes;
+
