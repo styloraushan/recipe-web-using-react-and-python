@@ -71,12 +71,6 @@ def get_user_details(user_id):
         return jsonify({"error": str(e)}), 500
     
 
-
-
-
-
-
-
 # Update User Details Route
 @auth_routes.route('/user/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
@@ -147,10 +141,10 @@ def search():
     return jsonify(recipes)
 
 
-# ✅ Define Blueprint for Feedback Routes
+# Define Blueprint for Feedback Routes
 feedback_routes = Blueprint('feedback_routes', __name__)
 
-# ✅ API to Submit Feedback
+# API to Submit Feedback
 @feedback_routes.route('/api/feedback', methods=['POST'])
 def submit_feedback():
     data = request.get_json()
@@ -169,7 +163,7 @@ def submit_feedback():
     except mysql.connector.Error as err:
         return jsonify({"error": str(err)}), 500
 
-# ✅ API to Get All Feedback
+# API to Get All Feedback
 @feedback_routes.route('/api/feedback', methods=['GET'])
 def get_feedback():
     try:
@@ -192,45 +186,18 @@ def get_feedback():
     except mysql.connector.Error as err:
         return jsonify({"error": str(err)}), 500
 
-# ✅ Register Blueprints
+# Register Blueprints
 app.register_blueprint(auth_routes, url_prefix="/auth")
 app.register_blueprint(feedback_routes, url_prefix="/feedback")
 
-# ✅ Run Flask app
+# Run Flask app
 if __name__ == "__main__":
     app.run(debug=True)
 
 
 recipe_routes = Blueprint("recipe_routes", __name__)
 
-#     # ✅ API to Add a New Recipe
-# @recipe_routes.route("/api/recipes", methods=["POST"])
-# def add_recipe():
-#     data = request.get_json()
-    
-#     try:
-#         # Insert into recipes table
-#         sql = "INSERT INTO recipes (name, image, description, servings, prep_time, cook_time, ready_time, category) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-#         values = (data["name"], data["image"], data["description"], data["servings"], data["prep_time"], data["cook_time"], data["ready_time"], data["category"])
-#         cursor.execute(sql, values)
-#         recipe_id = cursor.lastrowid  # Get last inserted recipe ID
 
-#         # Insert Ingredients
-#         for ing in data["ingredients"]:
-#             cursor.execute("INSERT INTO ingredients (recipe_id, ingredient, metric, us_measure) VALUES (%s, %s, %s, %s)", 
-#                            (recipe_id, ing["ingredient"], ing["metric"], ing["us"]))
-
-#         # Insert Directions
-#         for step_number, instruction in enumerate(data["directions"], start=1):
-#             cursor.execute("INSERT INTO directions (recipe_id, step_number, instruction) VALUES (%s, %s, %s)", 
-#                            (recipe_id, step_number, instruction))
-
-#         db.commit()
-#         return jsonify({"message": "Recipe added successfully!"}), 201
-
-#     except Exception as e:
-#         db.rollback()
-#         return jsonify({"error": str(e)}), 500
 
 @recipe_routes.route("/api/recipes", methods=["POST"])
 def add_recipe():
@@ -270,10 +237,7 @@ def add_recipe():
         return jsonify({"error": str(e)}), 500
     
 
-
-
-
-# ✅ API to Get All Recipes
+# API to Get All Recipes
 @recipe_routes.route("/api/recipes", methods=["GET"])
 def get_recipes():
     cursor.execute("SELECT * FROM recipes ORDER BY created_at DESC")
@@ -281,7 +245,7 @@ def get_recipes():
     return jsonify(recipes)
 
 
-# ✅ API to Get a Single Recipe (with Ingredients & Directions)
+# API to Get a Single Recipe (with Ingredients & Directions)
 @recipe_routes.route("/api/recipes/<int:recipe_id>", methods=["GET"])
 def get_recipe(recipe_id):
     cursor.execute("SELECT * FROM recipes WHERE id = %s", (recipe_id,))
@@ -304,7 +268,7 @@ def get_recipe(recipe_id):
     return jsonify(recipe)
 
 
-# ✅ API to Delete a Recipe
+# API to Delete a Recipe
 @recipe_routes.route("/api/recipes/<int:recipe_id>", methods=["DELETE"])
 def delete_recipe(recipe_id):
     try:
@@ -316,7 +280,7 @@ def delete_recipe(recipe_id):
         return jsonify({"error": str(e)}), 500
     
 
-# ✅ Recipe Fetching API
+#  Recipe Fetching API
 @recipe_routes.route("/api/recipe-list", methods=["GET"])
 def fetch_recipe_summaries():
     try:
@@ -374,12 +338,10 @@ def get_all_recipes():
         return jsonify({"error": "Internal Server Error"}), 500
 
 
-
-
 @recipe_routes.route("/api/allrecipes/<int:recipe_id>", methods=["GET"])
 def get_singlerecipe(recipe_id):
     try:
-        cursor = db.cursor(dictionary=True)  # ✅ Fetch data as dictionaries
+        cursor = db.cursor(dictionary=True)  
 
         # Fetch the main recipe details
         cursor.execute("""
@@ -429,18 +391,6 @@ def delete_userrecipe(recipe_id):
     except Exception as e:
         db.rollback()
         return jsonify({"error": str(e)}), 500
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @recipe_routes.route('/save-recipe', methods=['POST'])
@@ -502,96 +452,6 @@ def get_saved_recipes(user_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
-
-
-# # post comments for a recipe
-# @recipe_routes.route('/api/comments', methods=['POST'])
-# def post_comment():
-#     try:
-#         data = request.get_json()
-
-#         # Validate required fields
-#         recipe_id = data.get("recipe_id")
-#         username = data.get("username")
-#         content = data.get("content")
-
-#         if not all([recipe_id, username, content]):
-#             return jsonify({"error": "Missing required fields"}), 400
-
-#         created_at = datetime.now()
-
-#         # Use MySQL-compatible INSERT
-#         cursor.execute(
-#             "INSERT INTO comment (recipe_id, username, content, created_at) VALUES (%s, %s, %s, %s)",
-#             (recipe_id, username, content, created_at)
-#         )
-        
-#         # Get the last inserted ID
-#         new_id = cursor.lastrowid
-#         db.commit()
-
-#         return jsonify({
-#             "id": new_id,
-#             "recipe_id": recipe_id,
-#             "username": username,
-#             "content": content,
-#             "created_at": created_at.isoformat()
-#         }), 201
-
-#     except Exception as e:
-#         db.rollback()
-#         print("Error posting comment:", e)
-#         return jsonify({"error": str(e)}), 500
-    
-
-
-# @recipe_routes.route('/api/comments/<int:recipe_id>', methods=['GET'])
-# def get_comments(recipe_id):
-#     try:
-#         # Fetch comments for the specific recipe_id
-#         cursor.execute(
-#             "SELECT id, recipe_id, username, content, created_at FROM comment WHERE recipe_id = %s ORDER BY created_at DESC",
-#             (recipe_id,)
-#         )
-#         comments = cursor.fetchall()
-
-#         # Format the comments as JSON
-#         comments_list = [
-#             {
-#                 "id": row[0],
-#                 "recipe_id": row[1],
-#                 "username": row[2],
-#                 "content": row[3],
-#                 "created_at": row[4].isoformat() if row[4] else None
-#             }
-#             for row in comments
-#         ]
-
-#         return jsonify(comments_list), 200
-
-#     except Exception as e:
-#         print("Error fetching comments:", e)
-#         return jsonify({"error": str(e)}), 500
-
-
-
-# # Get UserName Details Route
-# @recipe_routes.route('/username/<int:user_id>', methods=['GET'])
-# def get_username_details(user_id):
-#     try:
-#         cursor.execute("SELECT username FROM users WHERE id = %s", (user_id,))
-#         user = cursor.fetchone()
-
-#         if user:
-#             return jsonify({
-#                 "user_id": user_id,
-#                 "username": user[0],
-               
-#             })
-#         else:
-#             return jsonify({"error": "User not found"}), 404
-#     except Exception as e:
-#         return jsonify({"error": str(e)}), 500
 
 
 @recipe_routes.route('/api/comments', methods=['POST'])

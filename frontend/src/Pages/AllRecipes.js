@@ -5,11 +5,11 @@
 // import Ingredient from "../components/Ingredients";
 
 // const styles = {
-//   homeContainer: { 
-//     padding: "20px", 
+//   homeContainer: {
+//     padding: "20px",
 //     backgroundColor: "#f8f9fa",  // Added missing comma
 //     maxWidth: "1300px",  // Used camelCase
-//     margin: "0 auto" 
+//     margin: "0 auto"
 //   },
 //   header: { textAlign: "center", marginBottom: "30px" },
 //   headerTitle: {
@@ -26,7 +26,7 @@
 //     gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
 //     gap: "20px",
 //     justifyItems: "center",
-   
+
 //   },
 //   foodItem: {
 //     backgroundColor: "#fff",
@@ -169,11 +169,6 @@
 
 // export default AllRecipes;
 
-
-
-
-
-
 // import React, { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 // import { FaHeart, FaStar } from "react-icons/fa";
@@ -277,8 +272,6 @@
 
 // export default AllRecipes;
 
-
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart, FaStar } from "react-icons/fa";
@@ -297,7 +290,9 @@ const AllRecipes = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch("http://localhost:5000/recipes/api/allrecipes");
+        const response = await fetch(
+          "http://localhost:5000/recipes/api/allrecipes"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch recipes");
         }
@@ -314,7 +309,9 @@ const AllRecipes = () => {
       if (!loggedInUserId) return;
 
       try {
-        const response = await fetch(`http://localhost:5000/recipes/saved/${loggedInUserId}`);
+        const response = await fetch(
+          `http://localhost:5000/recipes/saved/${loggedInUserId}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch saved recipes");
         }
@@ -341,11 +338,17 @@ const AllRecipes = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/recipes/save-recipe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: loggedInUserId, recipe_id: recipeId }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/recipes/save-recipe",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: loggedInUserId,
+            recipe_id: recipeId,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to save recipe");
@@ -365,7 +368,9 @@ const AllRecipes = () => {
       <div className={styles.homeContainer}>
         <header className={styles.header}>
           <h1 className={styles.headerTitle}>All Recipes</h1>
-          <p className={styles.headerSubtitle}>Discover the best flavors of Food</p>
+          <p className={styles.headerSubtitle}>
+            Discover the best flavors of Food
+          </p>
         </header>
 
         {loading && <p>Loading recipes...</p>}
@@ -375,15 +380,30 @@ const AllRecipes = () => {
           {recipes.map((recipe) => (
             <div key={recipe.id} className={styles.foodItem}>
               <div
-                className={`${styles.favoriteIcon} ${savedRecipes.includes(recipe.id) ? styles.saved : ""}`}
+                className={`${styles.favoriteIcon} ${
+                  savedRecipes.includes(recipe.id) ? styles.saved : ""
+                }`}
                 onClick={() => handleSaveRecipe(recipe.id)}
               >
-                <FaHeart style={{ color: savedRecipes.includes(recipe.id) ? "red" : "gray" }} />
+                <FaHeart
+                  style={{
+                    color: savedRecipes.includes(recipe.id) ? "red" : "gray",
+                  }}
+                />
               </div>
-              <Link to={`/recipedetails/${recipe.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                <img src={recipe.image} alt={recipe.name} className={styles.foodImage} />
+              <Link
+                to={`/recipedetails/${recipe.id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <img
+                  src={recipe.image}
+                  alt={recipe.name}
+                  className={styles.foodImage}
+                />
                 <div className={styles.foodInfo}>
-                  <h3 className={styles.foodName}>{recipe.name} ({recipe.category})</h3>
+                  <h3 className={styles.foodName}>
+                    {recipe.name} ({recipe.category})
+                  </h3>
                   <div className={styles.starRating}>
                     {[...Array(5)].map((_, i) => (
                       <FaStar key={i} className={styles.starIcon} />
@@ -402,4 +422,3 @@ const AllRecipes = () => {
 };
 
 export default AllRecipes;
-

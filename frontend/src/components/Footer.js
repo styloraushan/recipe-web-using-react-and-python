@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import "./Footer.css";
 
 
-// ✅ Separate FeedbackForm Component
+// Separate FeedbackForm Component
 const FeedbackForm = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -61,7 +61,7 @@ const FeedbackForm = () => {
   );
 };
 
-// ✅ Footer Component
+// Footer Component
 const Footer = () => {
   const [readMore, setReadMore] = useState(false);
 
@@ -122,7 +122,7 @@ const Footer = () => {
             support questions are all welcome!
           </p>
 
-          {/* ✅ Include FeedbackForm Here */}
+          {/* Include FeedbackForm Here */}
           <FeedbackForm />
         </div>
       </div>
